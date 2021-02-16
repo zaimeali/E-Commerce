@@ -1,7 +1,15 @@
 require('dotenv').config()
 
 const express = require('express')
+
+// dB
 const mongoose = require('mongoose')
+
+// Middleware
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+
 
 mongoose.connect(process.env.DATABASE,{
     useNewUrlParser: true,
@@ -12,6 +20,12 @@ mongoose.connect(process.env.DATABASE,{
 }).catch(err => console.error(err))
 
 const app = express()
+
+// Middleware in Express
+app.use(bodyParser.json())
+app.use(cookieParser())
+app.use(cors())
+
 
 const port = process.env.PORT || 8000
 
