@@ -6,3 +6,8 @@ In Backend:
 5) change in script in package.json
 6) "start" => "nodemon index.js"
 7) now npm start in terminal
+
+
+++++++++++++++++++++++++
+in mongodb cmd:
+1) show dbs (for checking is db connected or not)
