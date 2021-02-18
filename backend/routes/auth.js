@@ -5,9 +5,19 @@ const router = express.Router()
 const { check } = require('express-validator')
 
 // Controller
-const { signout, signup } = require('../controllers/auth')
+const { signin, signout, signup } = require('../controllers/auth')
 
-const validationRules = [
+
+const loginRules = [
+    check("email", "email is required")
+        .isEmail(),
+    check("password", "password should be atleast 8 character")
+        .isLength({
+            min: 8,
+        })
+]
+
+const registerRules = [
     check("name", "length of the name should be atleast 3")
         .isLength({
             min: 3,
@@ -20,7 +30,8 @@ const validationRules = [
         })
 ]
 
-router.post("/signup", validationRules, signup)
+router.post('/signin', loginRules, signin)
+router.post("/signup", registerRules, signup)
 router.get("/signout", signout)
 
 module.exports = router

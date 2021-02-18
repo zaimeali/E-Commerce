@@ -3,6 +3,59 @@ const User = require("../models/user")
 // Express-Validation
 const { validationResult } = require('express-validator')
 
+// JWT
+const jwt = require('jsonwebtoken')
+const expressJwt = require('express-jwt')
+
+
+exports.signin = (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        return res.status(422)
+            .json(errors)
+    }
+
+    const { email, password } = req.body
+
+    User.findOne({ email }, (err, user) => {
+        if(err) {
+            return res.status(400)
+                    .json({
+                        error: "User email does not exists"
+                    })
+        }
+        
+        if(!user.authenticate(password)) {
+            return res.status(401)
+                    .json({
+                        error: "Password does not match"
+                    })
+        }
+
+        // create token
+        const token = jwt.sign({
+            _id: user._id
+        }, process.env.SECRET_KEY)
+
+        // put token in cookie
+        res.cookie("token", token, {
+            expire: new Date() + 9999
+        })
+
+        // send response to front end
+        const { _id, name, email, role } = user
+        return res.json({
+            token,
+            user: {
+                _id,
+                name, 
+                email,
+                role
+            }
+        })
+    })
+}
+
 exports.signup = (req, res) => {
 
     const errors = validationResult(req)

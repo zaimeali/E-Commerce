@@ -24,3 +24,5 @@ in mongodb cmd:
 
 ==================
 express-validator => for validating like middleware
+jsonwebtoken => for authentication
+express-jwt
