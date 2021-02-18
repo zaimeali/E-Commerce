@@ -12,6 +12,7 @@ const cors = require('cors')
 
 // Routes
 const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 
 // dB Connection
@@ -32,6 +33,7 @@ app.use(cors())
 
 // Auth Router
 app.use("/api", authRoutes)
+app.use("/api", userRoutes)
 
 const port = process.env.PORT || 8000
 
