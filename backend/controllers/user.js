@@ -25,6 +25,38 @@ exports.getUser = (req, res) => {
     })
 }
 
+exports.updateUser = (req, res) => {
+    User.findByIdAndUpdate(
+        { _id: req.profile._id },
+        {
+            $set: req.body
+        },
+        { 
+            new: true, 
+            useFindAndModify: false
+        },
+        (err, user) => {
+            if(err || !user) {
+                return res.status(400)
+                    .json({
+                        error: "User not found"
+                    })
+            }
+            return res.json({
+                status: "Update Successfully",
+                user: {
+                    role: user.role,
+                    purchases: user.purchases,
+                    _id: user._id,
+                    name: user.name,
+                    lastname: user.lastname,
+                    email: user.email,
+                }
+            })
+        }
+    )
+}
+
 exports.getAllUser = (req, res) => {
     User.find()
         .exec((err, users) => {
