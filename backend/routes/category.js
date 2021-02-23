@@ -2,8 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 // Controller
-const { getAllCategory } = require('../controllers/category')
+const { getCategoryById } = require('../controllers/category')
+const { isAdmin, isAuthenticated, isSignedIn } = require('../controllers/auth')
+const { getUserById } = require('../controllers/user')
 
-router.param("categoryId", getAllCategory)
+router.param("categoryId", getCategoryById)
+router.param("userId", getUserById)
 
 module.exports = router
