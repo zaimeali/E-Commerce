@@ -6,6 +6,9 @@ const formidabale = require('formidable')
 // lodash
 const _ = require('lodash')
 
+// FileSystem
+const fs = require('fs')
+
 
 exports.getProductById = (req, res, next, id) => {
     Product.findById(id)
@@ -27,5 +30,5 @@ exports.getProduct = (req, res) => {
 }
 
 exports.createProduct = (req, res) => {
-
+    let form = new formidabale.IncomingForm()
 }
