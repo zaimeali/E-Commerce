@@ -1,7 +1,15 @@
 const Product = require('./../models/product')
 
+// formidable
+const formidabale = require('formidable')
+
+// lodash
+const _ = require('lodash')
+
+
 exports.getProductById = (req, res, next, id) => {
     Product.findById(id)
+        .populate("category")
         .exec((err, product) => {
             if(err) {
                 return res.status(400)
@@ -16,4 +24,8 @@ exports.getProductById = (req, res, next, id) => {
 
 exports.getProduct = (req, res) => {
     return res.json(req.product)
+}
+
+exports.createProduct = (req, res) => {
+
 }
