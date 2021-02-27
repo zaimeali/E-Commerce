@@ -24,7 +24,17 @@ exports.getProductById = (req, res, next, id) => {
 };
 
 exports.getProduct = (req, res) => {
+  req.product.photo = undefined;
   return res.json(req.product);
+};
+
+// Middleware to send photo when call get product request
+exports.photo = (req, res, next) => {
+  if (req.product.photo.data) {
+    res.set("Content-Type", req.product.photo.contentType);
+    res.send(req.product.photo.data);
+  }
+  next();
 };
 
 exports.createProduct = (req, res) => {
