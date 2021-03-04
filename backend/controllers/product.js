@@ -189,6 +189,7 @@ exports.updateStock = (req, res, next) => {
   });
 };
 
+// Get All Distinct Categories from Product Model
 exports.getAllUniqueCategories = (req, res) => {
   Product.distinct("category", {}, (err, categories) => {
     if (err) {
