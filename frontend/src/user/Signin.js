@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // React Router
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 // Helper Function
 import { signin, isAuthenticated, authenticate } from "../auth/helper";
@@ -14,28 +14,49 @@ const Signin = () => {
     email: "",
     password: "",
     error: "",
-    success: false,
     loading: false,
     isRedirect: false,
   });
 
-  const { email, password, error, success, loading, isRedirect } = values;
+  const { email, password, error, loading, isRedirect } = values;
 
   const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({
       ...values,
-      error: false,
+      error: "",
       [name]: event.target.value,
     });
+  };
+
+  const performRedirect = () => {
+    if (isRedirect) {
+      if (user && user.role === 1) {
+        return <p>Redirect to Admin</p>;
+      } else {
+        return <p>Redirect to Home</p>;
+      }
+    }
+    if (localStorage.getItem("jwt")) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  const loadingMessage = () => {
+    return (
+      loading && (
+        <div className="alert alert-info">
+          <h2>Loading..</h2>
+        </div>
+      )
+    );
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     setValues({
       ...values,
-      error: false,
       loading: true,
     });
 
@@ -47,7 +68,7 @@ const Signin = () => {
         if (data.errors) {
           setValues({
             ...values,
-            error: JSON.stringify(data.errors[0].msg),
+            error: data.errors[0].msg,
             loading: false,
           });
         } else {
@@ -73,6 +94,7 @@ const Signin = () => {
       <div className="row">
         <div className="col-md-6 offset-sm-3 text-left">
           <form action="">
+            {loadingMessage()}
             {values.error && <ErrorMessage />}
             <div className="form-group">
               <label className="text-light">Email</label>
@@ -92,7 +114,6 @@ const Signin = () => {
                 type="password"
               />
             </div>
-
             <button
               onClick={onSubmit}
               className="btn btn-success btn-block w-100 mt-3"
@@ -108,6 +129,8 @@ const Signin = () => {
   return (
     <Base title="Sign In" description="A page for user to login">
       {signInForm()}
+      {performRedirect()}
+      {/* <p className="text-center text-white">{JSON.stringify(values)}</p> */}
     </Base>
   );
 };

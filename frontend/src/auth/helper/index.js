@@ -51,9 +51,9 @@ export const authenticate = (data, next) => {
 };
 
 export const isAuthenticated = () => {
-  if (typeof window !== "undefined") {
-    return false;
-  }
+  //   if (typeof window !== "undefined") {
+  //     return false;
+  //   }
 
   if (localStorage.getItem("jwt")) {
     return JSON.parse(localStorage.getItem("jwt"));
