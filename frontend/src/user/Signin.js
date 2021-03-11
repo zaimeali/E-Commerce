@@ -33,12 +33,12 @@ const Signin = () => {
   const performRedirect = () => {
     if (isRedirect) {
       if (user && user.role === 1) {
-        return <p>Redirect to Admin</p>;
+        return <Redirect to="/admin/dashboard" />;
       } else {
-        return <p>Redirect to Home</p>;
+        return <Redirect to="/user/dashboard" />;
       }
     }
-    if (localStorage.getItem("jwt")) {
+    if (isAuthenticated().user) {
       return <Redirect to="/" />;
     }
   };
