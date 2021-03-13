@@ -23,7 +23,7 @@ const currentTab = (history, path) => {
 const Menu = ({ history }) => {
   const { user } = isAuthenticated();
 
-  console.log(isAuthenticated());
+  // console.log(isAuthenticated());
 
   return (
     <div>

@@ -10,7 +10,7 @@ import "./../styles.css";
 import Base from "./Base";
 
 export default function Home() {
-  console.log("API is: ", API);
+  // console.log("API is: ", API);
   return (
     <Base title="Home Page">
       <div className="row">
