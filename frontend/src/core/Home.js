@@ -26,7 +26,7 @@ export default function Home() {
       } else {
         setProducts(data);
       }
-      console.log(data);
+      // console.log(data);
     });
   };
 
@@ -39,9 +39,9 @@ export default function Home() {
       <div className="row text-center">
         <h1 className="text-white mb-3">All T-Shirts</h1>
         <div className="row">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div key={product._id} className="col-4 mb-4">
-              <Card product={product} />
+              <Card product={product} index={index} />
             </div>
           ))}
         </div>
