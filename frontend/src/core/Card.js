@@ -14,6 +14,7 @@ export const Card = ({
   index,
   reload = undefined,
   setReload = (f) => f,
+  count,
 }) => {
   const [redirect, setRedirect] = useState(false);
 
@@ -22,7 +23,7 @@ export const Card = ({
   const cardPrice = product ? product.price : "5";
 
   const addToCartFunction = () => {
-    addItemToCart(product, () => setRedirect(true));
+    addItemToCart(product, count, () => setRedirect(true));
   };
 
   const getARedirect = (redirect) => {
